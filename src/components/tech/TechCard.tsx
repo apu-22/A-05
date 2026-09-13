@@ -3,6 +3,8 @@ import starIcon from "../../assets/star.png";
 
 interface TechCardProps {
   item: ItechType;
+  onAddToStack: (item: ItechType) => void;
+  isAdded: boolean;
 }
 
 const badgeColors: Record<string, string> = {
@@ -22,9 +24,9 @@ const badgeColors: Record<string, string> = {
   Testing: "bg-emerald-50 text-emerald-600 border-emerald-200/70",
 };
 
-export default function TechCard({ item }: TechCardProps) {
+export default function TechCard({ item, onAddToStack, isAdded }: TechCardProps) {
   return (
-    <div className="group grid content-between gap-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm hover:border-slate-200 hover:shadow-md cursor-pointer transition-all duration-300">
+    <div className="group grid content-between gap-6 rounded-2xl border border-slate-100 p-6 hover:shadow-md cursor-pointer transition-all duration-300">
       <div>
 
         <div className="flex items-center justify-between">
@@ -51,7 +53,7 @@ export default function TechCard({ item }: TechCardProps) {
         </h2>
 
 
-        <p className="mt-3 text-sm leading-relaxed text-slate-500">
+        <p className="mt-3 text-sm text-slate-500">
           {item.description}
         </p>
       </div>
@@ -73,9 +75,15 @@ export default function TechCard({ item }: TechCardProps) {
 
         <button
           type="button"
-          className="mt-6 w-full rounded-2xl bg-[#0B1120] py-3.5 text-center text-white transition-all duration-200 hover:bg-slate-800 cursor-pointer"
+          onClick={() => onAddToStack(item)}
+          disabled={isAdded}
+          className={`mt-6 w-full rounded-2xl py-3.5 text-center text-sm font-semibold transition-all duration-200 ${
+            isAdded
+              ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+              : "bg-[#0B1120] text-white hover:bg-slate-800 cursor-pointer"
+          }`}
         >
-          Add to Stack
+          {isAdded ? "✓ Added to Stack" : "Add to Stack"}
         </button>
       </div>
     </div>
