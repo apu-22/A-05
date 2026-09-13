@@ -2,6 +2,7 @@ import { use, useState } from "react";
 import type { ItechType } from "../../types/techType";
 import TechCard from "./TechCard";
 import TechStack from "./TechStack";
+import { toast } from "react-toastify";
 
 interface TechProps {
   techData: Promise<ItechType[]>;
@@ -13,18 +14,26 @@ export default function TechnolyCard({ techData }: TechProps) {
 
   // Add technology to stack
   const handleAddToStack = (item: ItechType) => {
-
+    if (selectedStack.some(techItem => techItem.id === item.id)) {
+      toast.warn(`${item.name} is already in your stack!`);
+      return;
+    }
     setSelectedStack([...selectedStack, item]);
+    toast.success(`${item.name} added to your stack!`);
   };
 
-  // Remove single technolu from stack usin filter method
+  // Remove single technolo from stack using filter method
   const handleRemoveFromStack = (id: string) => {
+    const itemToRemove = selectedStack.find(techItem => techItem.id === id);
     setSelectedStack(selectedStack.filter(techItem => techItem.id !== id));
+    toast.info(`${itemToRemove?.name || "Technology"} removed from your stack!`);
   };
 
   // Remove all technologies from stack
   const handleRemoveAll = () => {
+    if (selectedStack.length === 0) return;
     setSelectedStack([]);
+    toast.error("All technologies removed from your stack!");
   };
 
   return (

@@ -76,7 +76,6 @@ export default function TechCard({ item, onAddToStack, isAdded }: TechCardProps)
         <button
           type="button"
           onClick={() => onAddToStack(item)}
-          disabled={isAdded}
           className={`mt-6 w-full rounded-2xl py-3.5 text-center text-sm font-semibold transition-all duration-200 ${
             isAdded
               ? "bg-slate-100 text-slate-400 cursor-not-allowed"
